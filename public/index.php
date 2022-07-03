@@ -2,6 +2,10 @@
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
+//phpinfo();
+//$a = 111;
+//xdebug_info();
+//exit(0);
 
 define('LARAVEL_START', microtime(true));
 
