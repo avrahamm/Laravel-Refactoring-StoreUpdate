@@ -24,18 +24,33 @@ services:
 #    ports:
 #      - 13306:3306
 
-  mariadb:
-    image: mariadb
+#  mariadb:
+#    image: mariadb
+#    environment:
+#      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+#      - MARIADB_USER=DB_USERNAME
+#      - MARIADB_PASSWORD=DB_PASSWORD
+#      - MARIADB_DATABASE=DB_DATABASE
+#      - MARIADB_ROOT_PASSWORD=MARIADB_ROOT_PASSWORD
+#    networks:
+#      - laravel.local
+#    volumes:
+#      - mariadb:/var/lib/mysql
+#    ports:
+#      - 13306:3306
+
+  mysql:
+    image: mysql
     environment:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - MARIADB_USER=DB_USERNAME
-      - MARIADB_PASSWORD=DB_PASSWORD
-      - MARIADB_DATABASE=DB_DATABASE
-      - MARIADB_ROOT_PASSWORD=MARIADB_ROOT_PASSWORD
+      - MYSQL_USER=DB_USERNAME
+      - MYSQL_PASSWORD=DB_PASSWORD
+      - MYSQL_DATABASE=DB_DATABASE
+      - MYSQL_ROOT_PASSWORD=MARIADB_ROOT_PASSWORD
     networks:
       - laravel.local
     volumes:
-      - mariadb:/var/lib/mysql
+      - mysql:/var/lib/mysql
     ports:
       - 13306:3306
 
@@ -44,7 +59,7 @@ services:
     ports:
       - '8000:8000'
     environment:
-      - DB_HOST=mariadb
+      - DB_HOST=mysql
       - DB_PORT=3306
       - DB_USERNAME=DB_USERNAME
       - DB_PASSWORD=DB_PASSWORD
@@ -54,10 +69,10 @@ services:
     networks:
       - laravel.local
     depends_on:
-      - mariadb
+      - mysql
 
 volumes:
-  mariadb:
+  mysql:
     driver: "local"
   composer:
     driver: "local"
