@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+#  composer:
+#    build:
+#      context: .
+#      dockerfile: docker/composer.dockerfile
+#    networks:
+#      - laravel.local
+#    volumes:
+#      - .:/var/www/html
+
+  mariadb:
+    image: docker.io/bitnami/mariadb:10.6
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=DB_USERNAME
+      - MARIADB_DATABASE=DB_DATABASE
+    networks:
+      - laravel.local
+    volumes:
+      - mariadb:/bitnami/mariadb
+    ports:
+      - 13306:3306
+
+  myapp:
+    image: docker.io/bitnami/laravel:8
+    ports:
+      - '8000:8000'
+    environment:
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=DB_USERNAME
+      - DB_DATABASE=DB_DATABASE
+    volumes:
+      - '.:/app'
+    networks:
+      - laravel.local
+    depends_on:
+      - mariadb
+
+volumes:
+  mariadb:
+    driver: "local"
+  composer:
+    driver: "local"
+
+#  On ubuntu try networks
+#  @link:https://superuser.com/questions/1668461/xubuntu-20-4-xdebug-3-and-docker-impossible-to-connect-from-container-to-host </br>
+networks:
+  laravel.local:
