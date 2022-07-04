@@ -5,6 +5,9 @@
 - Clone the project with `git clone`
 - Copy `.env.example` file to `.env` and edit database credentials there
 - Run `composer install`
+- https://laravel.com/docs/8.x/sail#installing-composer-dependencies-for-existing-projects  
+- Take laravelsail/php80-composer:latest for php80 version.
+---
 - Run `php artisan key:generate`
 - Run `php artisan migrate --seed` (it has some seeded data for your testing)
 - That's it: launch the main URL
